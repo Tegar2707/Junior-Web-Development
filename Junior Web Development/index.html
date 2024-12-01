@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Booking</title>
+</head>
+<body>
+    <h1>Hotel Booking Application</h1>
+    <nav>
+        <ul>
+            <li><a href="#produk">Produk</a></li>
+            <li><a href="#harga">Daftar Harga</a></li>
+            <li><a href="#tentang">Tentang Kami</a></li>
+            <li><a href="#pesan">Pesan Kamar</a></li>
+            <li><a href="view_bookings.php">Lihat Pesanan</a></li>
+        </ul>
+    </nav>
+
+    <section id="produk">
+        <h2>Produk</h2>
+        <img src="standar.jpg" alt="Standar Room">
+        <img src="deluxe.jpg" alt="Deluxe Room">
+        <img src="executif.jpg" alt="Executive Room">
+    </section>
+
+    <section id="harga">
+        <h2>Daftar Harga</h2>
+        <table border="1">
+            <tr>
+                <th>Tipe Kamar</th>
+                <th>Harga per Malam</th>
+            </tr>
+            <tr>
+                <td>Standar</td>
+                <td>Rp 500,000</td>
+            </tr>
+            <tr>
+                <td>Deluxe</td>
+                <td>Rp 800,000</td>
+            </tr>
+            <tr>
+                <td>Executive</td>
+                <td>Rp 1,200,000</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="tentang">
+        <h2>Tentang Kami</h2>
+        <p>Alamat: Jl. Contoh No. 123, Jakarta</p>
+        <p>No Telp: (021) 12345678</p>
+        <p>Email: info@hotelcontoh.com</p>
+    </section>
+
+    <section id="pesan">
+        <h2>Pesan Kamar</h2>
+        <form method="post" action="process_booking.php">
+            <label for="nama">Nama Pemesan:</label>
+            <input type="text" id="nama" name="nama" required><br>
+
+            <label for="jenis_kelamin">Jenis Kelamin:</label>
+            <select id="jenis_kelamin" name="jenis_kelamin">
+                <option value="laki">Laki-laki</option>
+                <option value="perempuan">Perempuan</option>
+            </select><br>
+
+            <label for="nomor_identitas">Nomor Identitas:</label>
+            <input type="text" id="nomor_identitas" name="nomor_identitas" pattern="\d{16}" title="Isian salah..data harus 16 digit" required><br>
+
+            <label for="tipe_kamar">Tipe Kamar:</label>
+            <select id="tipe_kamar" name="tipe_kamar">
+                <option value="standar">Standar</option>
+                <option value="deluxe">Deluxe</option>
+                <option value="executive">Executive</option>
+            </select><br>
+
+            <label for="tanggal_pesan">Tanggal Pesan:</label>
+            <input type="text" id="tanggal_pesan" name="tanggal_pesan" placeholder="dd/mm/yyyy" required><br>
+
+            <label for="durasi_menginap">Durasi Menginap:</label>
+            <input type="number" id="durasi_menginap" name="durasi_menginap" required><br>
+
+            <label for="breakfast">Termasuk Breakfast:</label>
+            <input type="checkbox" id="breakfast" name="breakfast"><br>
+
+            <label for="total_bayar">Total Bayar:</label>
+            <input type="text" id="total_bayar" name="total_bayar" readonly><br>
+
+            <button type="button" onclick="hitungTotal()">Hitung Total Bayar</button>
+            <button type="submit">Pesan</button>
+        </form>
+    </section>
+
+    <script>
+        function hitungTotal() {
+            var tipeKamar = document.getElementById('tipe_kamar').value;
+            var durasiMenginap = parseInt(document.getElementById('durasi_menginap').value);
+            var breakfast = document.getElementById('breakfast').checked;
+            var harga = 0;
+
+            if (tipeKamar === 'standar') {
+                harga = 500000;
+            } else if (tipeKamar === 'deluxe') {
+                harga = 800000;
+            } else if (tipeKamar === 'executive') {
+                harga = 1200000;
+            }
+
+            var total = harga * durasiMenginap;
+
+            if (durasiMenginap > 3) {
+                total *= 0.9; // Diskon 10%
+            }
+
+            if (breakfast) {
+                total += 80000;
+            }
+
+            document.getElementById('total_bayar').value = 'Rp ' + total.toLocaleString();
+        }
+    </script>
+</body>
+</html>
